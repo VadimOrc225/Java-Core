@@ -85,7 +85,6 @@ public class View {
     }
 
     /**
-     *
      * @param depositSum сумма на депозите до снятия
      * @return сумма снятия
      * @throws InsufficientFundsException
