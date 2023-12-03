@@ -28,38 +28,27 @@ public class View {
         try {
             account.setStartBalance(inputBalance());
             System.out.printf("Начальный балланс: %d\n", account.getStartBalance());
-
-        } catch (IllegalArgumentException e) {
-            System.out.printf("%s. Вы вводите [%d]\n", e.getMessage(), e.getSum());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-        }
-
-        try {
             account.setDepositSum(inputDeposit());
             System.out.printf("Сумма депозита: %d\n",
                     account.getDepositSum());
-        } catch (IllegalArgumentException e) {
-            System.out.printf("%s. Вы вводите [%d]\n", e.getMessage(), e.getSum());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-        }
-
-        try {
-            int sumBalance = account.getDepositSum()+account.getStartBalance();
+            int sumBalance = account.getDepositSum() + account.getStartBalance();
             int summaFromDeposit = inputSumFromDeposit(sumBalance);
             account.setDepositSum(sumBalance - summaFromDeposit);
             System.out.printf("На счете осталось: %d\n",
                     (sumBalance - summaFromDeposit));
+
+
+        } catch (IllegalArgumentException e) {
+            System.out.printf("%s. Вы вводите [%d]\n", e.getMessage(), e.getSum());
         } catch (InsufficientFundsException e) {
             System.out.printf("%s. Вы вводите сумму: [%d]\n", e.getMessage(), e.getSum());
+
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {
+        } finally {
+            iScanner.close();
         }
-        iScanner.close();
     }
 
     /**
@@ -95,6 +84,11 @@ public class View {
         return depositSum;
     }
 
+    /**
+     * @param depositSum сумма на депозите до снятия
+     * @return сумма снятия
+     * @throws InsufficientFundsException
+     */
     public int inputSumFromDeposit(int depositSum) throws InsufficientFundsException {
         System.out.print("Введите сумму снятия средств\n ");
         int sumFromDeposit = Integer.parseInt(iScanner.next());
@@ -102,7 +96,7 @@ public class View {
             iScanner.close();
             throw new InsufficientFundsException("На депозите меньше, чем Вы ввели", sumFromDeposit);
         }
-        System.out.printf("Вы сняли %d", sumFromDeposit);
+        System.out.printf("Вы сняли %d\n", sumFromDeposit);
 
 
         return sumFromDeposit;
