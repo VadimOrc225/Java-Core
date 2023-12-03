@@ -11,7 +11,7 @@ public class Freelancer extends BaseWorker{
         System.out.printf("%s имеет зарплату %.2f\n", name,  (20.8 * 8 * hourSalary));
     }
 
-    public static Freelancer create(String name, int age, float hourSalary){
+    public static Freelancer create(String name, int age, double hourSalary){
         if (name == null || name.length() < 3){
             throw new RuntimeException("Некорректное имя человека.");
         }
@@ -23,13 +23,16 @@ public class Freelancer extends BaseWorker{
 
     @Override
     public String toString() {
-        return String.format("%s - %d - почасовая оплата равна %f \n", name, age, hourSalary);
+        return String.format("%s - %d - почасовая оплата равна %f ", name, age, hourSalary);
     }
+
+
+
     //endregion
 
     //region Конструкторы
 
-    public Freelancer(String name, int age, float salary){
+    public Freelancer(String name, int age, double salary){
         super(name, age);
         this.hourSalary = salary;
 
@@ -41,19 +44,25 @@ public class Freelancer extends BaseWorker{
     //region Свойства
 
 
-    public float getHourSalary() {
+    public double getHourSalary() {
         return hourSalary;
     }
 
-    public void setHourSalary(int maxJump) {
+    public void setHourSalary(double hourSalary) {
         this.hourSalary = hourSalary;
     }
+
 
     //endregion
 
     //region Поля
 
-    private float hourSalary;
+    private double hourSalary;
+
+    @Override
+    public int compareTo(BaseWorker o) {
+        return super.getAge() - o.getAge();
+    }
 
 
     //endregion

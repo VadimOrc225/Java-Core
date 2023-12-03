@@ -15,7 +15,7 @@ public class Worker extends BaseWorker{
 
 
 
-    public static Worker create(String name, int age, float salary){
+    public static Worker create(String name, int age, double salary){
         if (name == null || name.length() < 3){
             throw new RuntimeException("Некорректное имя человека.");
         }
@@ -27,14 +27,20 @@ public class Worker extends BaseWorker{
 
     @Override
     public String toString() {
-        return String.format("%s - %d - зарплата %f \n", name, age, salary);
+        return String.format("%s - %d - зарплата %f ", name, age, salary);
     }
+
+    @Override
+    public int compareTo(BaseWorker o) {
+        return super.getAge() - o.getAge();
+    }
+
 
     //endregion
 
     //region Конструкторы
 
-    public Worker(String name, int age, float salary){
+    public Worker(String name, int age, double salary){
         super(name, age);
         this.salary = salary;
 
@@ -50,7 +56,7 @@ public class Worker extends BaseWorker{
         this.salary = salary;
     }
 
-    public float getSalary() {
+    public double getSalary() {
         return salary;
     }
 
@@ -59,7 +65,7 @@ public class Worker extends BaseWorker{
 
     //region Поля
 
-    private float salary;
+    private double salary;
 
 
     //endregion

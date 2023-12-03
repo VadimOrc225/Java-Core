@@ -1,6 +1,6 @@
 package org.core.Homework.les3OOP;
 
-public abstract class BaseWorker {
+public abstract class BaseWorker implements Comparable<BaseWorker> {
 
     //region Поля
     protected String name;
@@ -14,15 +14,23 @@ public abstract class BaseWorker {
     }
 
     public void setName(String name) {
-        if (name == null || name.length() < 3){
+        if (name == null || name.length() < 3) {
             throw new RuntimeException("Некорректное имя человека.");
         }
         this.name = name;
     }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
     //endregion
 
     //region Конструкторы
-    protected BaseWorker(String name){
+    protected BaseWorker(String name) {
         this(name, 18);
     }
 
@@ -35,8 +43,6 @@ public abstract class BaseWorker {
     //region Методы
     public abstract void displaySalary();
     //endregion
-
-
 
 
 }
