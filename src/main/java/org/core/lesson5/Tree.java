@@ -3,7 +3,7 @@ package org.core.lesson5;
 import java.io.File;
 
 /**
- * TODO: Доработать метод print, необходимо распечатывать директории и файлы
+ * необходимо распечатывать дерево директорий и файлов
  */
 public class Tree {
 
