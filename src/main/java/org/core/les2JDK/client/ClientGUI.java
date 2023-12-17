@@ -115,13 +115,13 @@ public void sendMessage(){
 }
     @Override
     public void sendMessage(String message) {
-      log.append(message);
+      log.append("\n" + message);
     }
 
     @Override
     public void disconnectedFromServer() {
 hideHeaderPanel(true);
-client.disconnectFromServer();
+
     }
 
     @Override
