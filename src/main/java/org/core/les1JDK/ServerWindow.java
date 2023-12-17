@@ -1,5 +1,7 @@
 package org.core.les1JDK;
 
+import org.core.les2JDK.server.Server;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +14,7 @@ import java.util.List;
 public class ServerWindow extends JFrame {
     public static final int WIDTH = 400;
     public static final int HEIGHT = 300;
-    public static final String LOG_PATH = "./log.txt";
+    public static final String LOG_PATH = "./src/main/java/org/core/les1JDK/log.txt";
 
     List<ClientGUI> clientGUIList;
 
@@ -21,7 +23,7 @@ public class ServerWindow extends JFrame {
     boolean work;
     int counter = 0;
 
-    ServerWindow(){
+    ServerWindow() {
         clientGUIList = new ArrayList<>();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,12 +37,11 @@ public class ServerWindow extends JFrame {
         setVisible(true);
     }
 
-    public boolean connectUser(ClientGUI clientGUI){
-        if (!work){
+    public boolean connectUser(ClientGUI clientGUI) {
+        if (!work) {
             return false;
         }
         clientGUIList.add(clientGUI);
-        counter++;
         return true;
     }
 
@@ -48,15 +49,15 @@ public class ServerWindow extends JFrame {
         return readLog();
     }
 
-    public void disconnectUser(ClientGUI clientGUI){
+    public void disconnectUser(ClientGUI clientGUI) {
         clientGUIList.remove(clientGUI);
 
-            clientGUI.disconnectFromServer();
+        clientGUI.disconnectFromServer();
 
     }
 
-    public void message(String text){
-        if (!work){
+    public void message(String text) {
+        if (!work) {
             return;
         }
 
@@ -65,37 +66,37 @@ public class ServerWindow extends JFrame {
         saveInLog(text);
     }
 
-    private void answerAll(String text){
-        for (ClientGUI clientGUI: clientGUIList){
+    private void answerAll(String text) {
+        for (ClientGUI clientGUI : clientGUIList) {
             clientGUI.answer(text);
         }
     }
 
-    private void saveInLog(String text){
-        try (FileWriter writer = new FileWriter(LOG_PATH, true)){
+    private void saveInLog(String text) {
+        try (FileWriter writer = new FileWriter(LOG_PATH, true)) {
             writer.write(text);
             writer.write("\n");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private String readLog(){
+    private String readLog() {
         StringBuilder stringBuilder = new StringBuilder();
-        try (FileReader reader = new FileReader(LOG_PATH);){
+        try (FileReader reader = new FileReader(LOG_PATH);) {
             int c;
-            while ((c = reader.read()) != -1){
+            while ((c = reader.read()) != -1) {
                 stringBuilder.append((char) c);
             }
-            stringBuilder.delete(stringBuilder.length()-1, stringBuilder.length());
+            stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
             return stringBuilder.toString();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private void appendLog(String text){
+    private void appendLog(String text) {
         log.append(text + "\n");
     }
 
@@ -113,7 +114,7 @@ public class ServerWindow extends JFrame {
         btnStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (work){
+                if (work) {
                     appendLog("Сервер уже был запущен");
                 } else {
                     work = true;
@@ -125,13 +126,13 @@ public class ServerWindow extends JFrame {
         btnStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!work){
+                if (!work) {
                     appendLog("Сервер уже был остановлен");
                 } else {
                     work = false;
-                    for (ClientGUI clientGUI: clientGUIList){
-
-                        disconnectUser(clientGUI);
+                    for (int i = clientGUIList.size() - 1; i >= 0; i--) { // Позволяет пройти по всему листу
+                        //несмотря на remove
+                        disconnectUser(clientGUIList.get(i));
                     }
                     appendLog("Сервер остановлен!");
                 }
